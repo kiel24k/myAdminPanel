@@ -12,6 +12,7 @@ class message extends Model
 
     protected $table = 'messages';
     protected $fillable = [
+        'room_with',
         'sender_id',
         'receiver_id',
         'message',

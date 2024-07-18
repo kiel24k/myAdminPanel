@@ -36,6 +36,7 @@ class AdminController extends Controller
     public function chat(Request $request)
     {
         $message = new message();
+        $message->room_with = $request->room_with;
         $message->sender_id = $request->sender_id;
         $message->receiver_id = $request->receiver_id;
         $message->message = $request->message;
@@ -44,6 +45,6 @@ class AdminController extends Controller
 
     public function listMessage()
     {
-        return response()->json(message::orderBy('id', 'asc')->get());
+        return response()->json(message::orderBy('id', 'DESC')->get());
     }
 }
