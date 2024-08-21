@@ -22,6 +22,17 @@
 import axios from 'axios';
 import { ref } from 'vue';
 
+const datas = ref({})
+onMounted(async() => {
+    await axios({
+        method: 'GET',
+        url: '/api/user'
+    }).then(res => {
+       datas.value = res.data
+
+})
+})
+
 
 
 const props = defineProps(['name'])
@@ -33,7 +44,7 @@ const input = ref({
 const sendMessage = () => {
 axios.post('/api/message', {
     room_with: "Sales",
-    sender_id: props.name,
+    sender_id: datas.value.id,
     receiver_id: 1,
     message:input.value.message
 }).then(response => {

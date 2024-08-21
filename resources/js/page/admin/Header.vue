@@ -16,6 +16,8 @@ import axios from 'axios';
 import { onMounted, ref } from 'vue';
 const datas = ref({})
 const token = localStorage.getItem('token')
+
+
 onMounted(async() => {
 axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
     await axios({

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\messageEvent;
+use App\Events\testingEvent;
 use App\Models\Item;
 use App\Models\message;
 use App\Models\User;
@@ -41,10 +43,25 @@ class AdminController extends Controller
         $message->receiver_id = $request->receiver_id;
         $message->message = $request->message;
         $message->save();
+
+        broadcast(new messageEvent($message));
+        return $message;
     }
 
     public function listMessage()
     {
         return response()->json(message::orderBy('id', 'DESC')->get());
+    }
+    public function signup(Request $request){
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password)
+        ]);
+        return response()->json($user);
+    }
+    public function testChat($text){
+        event(new testingEvent($text));
+        return $text;
     }
 }

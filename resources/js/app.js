@@ -1,5 +1,6 @@
 
 // require('./bootstrap');
+import './bootstrap';
 
 import { createApp } from 'vue'
 import {createPinia} from 'pinia'

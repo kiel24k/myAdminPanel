@@ -21,15 +21,23 @@ const name = ref(2)
 const current = ref()
 const message = ref({})
 
-// watch(current,(newVal, oldVal) => {
-//     messageSent()
-// })
+watch(current,(newVal, oldVal) => {
+    messageSent()
+})
 
 const get = () => {
     set(1)
 }
 const set = (val) => {
     current.value = val
+    connect
+}
+
+const connect = () => {
+  window.Echo.private("message." + current.value )
+  .listen('messageEvent', e => {
+       console.log(e);
+  })
 }
 
 

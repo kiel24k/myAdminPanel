@@ -63,8 +63,10 @@ const login = async() =>{
         if(res.status === 200){
             console.log(res.data);
             localStorage.setItem('token', res.data)
-            router.push('list')
+            router.push('test')
         }
+    }).catch(err => {
+        console.log(err);
     })
 });
    }

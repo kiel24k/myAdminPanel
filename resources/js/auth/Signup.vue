@@ -8,110 +8,48 @@
                         <h3 class="card-title">Signup</h3>
                     </div>
 
-                    <form>
+                    <form @submit.prevent>
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >First Name</label
+                                    >Name</label
                                 >
                                 <input
-                                    type="email"
+                                    type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
                                     placeholder="Enter First Name"
+                                    v-model="input.name"
                                 />
+                                </div>
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Last Name</label
+                                    >Email</label
                                 >
                                 <input
-                                    type="email"
+                                    type="text"
                                     class="form-control"
                                     id="exampleInputEmail1"
                                     placeholder="Enter Last Name"
+                                    v-model="input.email"
                                 />
                             </div>
                             <div class="form-group">
                                 <label for="exampleInputEmail1"
-                                    >Middle Name</label
-                                >
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="exampleInputEmail1"
-                                    placeholder="Enter Middlename"
-                                />
-                            </div>
-
-
-
-                            <div class="form-group">
-                                <label for="exampleInputEmail1"
-                                    >Email address</label
-                                >
-                                <input
-                                    type="email"
-                                    class="form-control"
-                                    id="exampleInputEmail1"
-                                    placeholder="Enter email"
-                                />
-                            </div>
-                            <div class="form-group">
-                                <label for="exampleInputPassword1"
                                     >Password</label
                                 >
                                 <input
                                     type="password"
                                     class="form-control"
-                                    id="exampleInputPassword1"
-                                    placeholder="Enter Password"
+                                    id="exampleInputEmail1"
+                                    placeholder="Enter Last Name"
+                                    v-model="input.password"
                                 />
                             </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <div class="custom-file"></div>
-                                </div>
+                            <div class="row">
+                                <button class="btn btn-dark" @click="submit">Submit</button>
                             </div>
-                             <!-- //Gender -->
-                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                                <label class="form-check-label" for="exampleRadios1">
-                                  Male
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                <label class="form-check-label" for="exampleRadios2">
-                                  Female
-                                </label>
-                              </div>
-                              <div class="form-check">
-                                <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                                <label class="form-check-label" for="exampleRadios2">
-                                  Other
-                                </label>
-                              </div>
-
-                        </div>
-
-                        <div class="card-footer">
-                            <button type="submit" class="btn btn-primary">
-                                Submit
-                            </button>
-                        </div>
-                        <div class="form-check">
-                            <input
-                                type="checkbox"
-                                class="form-check-input"
-                                id="exampleCheck1"
-                            />
-                            <label
-                                class="form-check-label"
-                                for="exampleCheck1"
-                                >Remember me</label
-                            >
-                        </div>
                     </form>
                 </div>
             </div>
@@ -121,4 +59,21 @@
 
 <script setup>
 import Navbar from "@/components/UserNavbar.vue";
+import axios from "axios";
+
+const input = ({})
+const submit = () => {
+    axios({
+        method: 'POST',
+        url: 'api/signup',
+        data: {
+            email: input.email,
+            name: input.name,
+            password:input.password
+        }
+    }).then(response => {
+        console.log(response.data);
+
+    })
+}
 </script>

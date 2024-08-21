@@ -30,7 +30,13 @@ const routes = [
         meta: {
             requireToken: true
         }
-    }
+    },
+  {
+    path: '/test',
+    name: 'test',
+    component: () => import('../page/admin/testChat.vue')
+  }
+
 ]
 
 const router = createRouter({

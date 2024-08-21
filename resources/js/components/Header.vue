@@ -23,7 +23,7 @@ axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
         url: '/api/user'
     }).then(res => {
        datas.value = res.data
-    console.log(res);
+    
 })
 
 })
