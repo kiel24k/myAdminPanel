@@ -31,6 +31,11 @@ const routes = [
             requireToken: true
         }
     },
+    {
+      path: '/myChat',
+      name: 'myChat',
+      component: () => import('../page/admin/MyChat.vue')  
+    },
   {
     path: '/test',
     name: 'test',
