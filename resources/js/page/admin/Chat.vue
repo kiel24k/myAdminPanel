@@ -33,18 +33,20 @@ const set = (val) => {
     connect
 }
 
-const connect = () => {
-  window.Echo.private("message." + current.value )
-  .listen('messageEvent', e => {
-       console.log(e);
-  })
-}
+
 
 
 const messageSent = () => {
    axios.get('api/listMessage').then(response => {
     message.value = response.data
    })
+}
+
+const connect = () => {
+  window.Echo.private("message." + current.value )
+  .listen('messageEvent', e => {
+       console.log(e);
+  })
 }
 
 onMounted(() => {
