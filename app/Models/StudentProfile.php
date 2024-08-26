@@ -10,6 +10,12 @@ class StudentProfile extends Model
 {
     use HasFactory;
 
+
+     protected $fillable = [
+        'student_id',
+        'country'
+     ];
+     
     public function students () {
         return $this->hasMany(Student::class);
     }

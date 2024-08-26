@@ -8,6 +8,8 @@ use App\Events\testingEvent;
 use App\Models\Chat;
 use App\Models\Item;
 use App\Models\message;
+use App\Models\Sorting;
+use App\Models\StudentProfile;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,7 +57,8 @@ class AdminController extends Controller
     {
         return response()->json(message::orderBy('id', 'DESC')->get());
     }
-    public function signup(Request $request){
+    public function signup(Request $request)
+    {
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -64,25 +67,27 @@ class AdminController extends Controller
         return response()->json($user);
     }
 
-    public function allUsers () {
+    public function allUsers()
+    {
         $users = User::get();
         return response()->json($users);
     }
 
-    public function getUserMessage($senderID,$receiverID) {
-        $chat = Chat::where(function($query) use ($senderID, $receiverID) {
+    public function getUserMessage($senderID, $receiverID)
+    {
+        $chat = Chat::where(function ($query) use ($senderID, $receiverID) {
             $query->where('message_from_id', $senderID)
-                  ->where('message_receiver_id', $receiverID);
-        })->orWhere(function($query) use ($senderID, $receiverID) {
+                ->where('message_receiver_id', $receiverID);
+        })->orWhere(function ($query) use ($senderID, $receiverID) {
             $query->where('message_from_id', $receiverID)
-                  ->where('message_receiver_id', $senderID);
+                ->where('message_receiver_id', $senderID);
         })->get();
-    
-        return response()->json($chat);
 
+        return response()->json($chat);
     }
 
-    public function userMessage(Request $request){
+    public function userMessage(Request $request)
+    {
         $chat = new Chat();
         $chat->message_from_id = $request->message_from_id;
         $chat->message_receiver_id = $request->message_receiver_id;
@@ -91,8 +96,36 @@ class AdminController extends Controller
         return response()->json($chat);
     }
 
-    public function testChat($text, $id){
+    public function tableSort(Request $request)
+    {
+        $sortBy = $request->query('sort_by', 'name'); // Default sorting field
+        $sortOrder = $request->query('sort_order', 'asc'); // Default sorting order
+        // Apply sorting
+        $data = Sorting::orderBy($sortBy, $sortOrder)->paginate(2);
+        return response()->json($data);
+    }
+
+
+    public function testChat($text, $id)
+    {
         event(new PrivateEvent($text, $id));
         return "true";
+    }
+
+
+
+
+    public function axiosTest(Request $req)
+    {
+        
+        foreach ($req->country as $country) {
+            # code...
+           $item = StudentProfile::create([
+                'student_id' => $req->student_id,
+                'country' => $country
+            ]);
+        }
+        return response()->json($item);
+
     }
 }
