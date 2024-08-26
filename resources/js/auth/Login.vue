@@ -1,4 +1,4 @@
-
+<!-- 
 <template>
     <Navbar/>
     <div class="container-fluid ">
@@ -71,4 +71,27 @@ const login = async() =>{
 });
    }
 
+</script> -->
+
+<template>
+  <div>
+    <form @submit.prevent="handleLogin">
+      <input v-model="email" type="email" placeholder="Email" required />
+      <input v-model="password" type="password" placeholder="Password" required />
+      <button type="submit">Login</button>
+    </form>
+  </div>
+</template>
+
+<script setup>
+import { ref } from 'vue';
+import { useUserStore } from '../stores/userStores';
+
+const email = ref('');
+const password = ref('');
+const userStore = useUserStore();
+
+const handleLogin = async () => {
+  await userStore.login({ email: email.value, password: password.value });
+};
 </script>

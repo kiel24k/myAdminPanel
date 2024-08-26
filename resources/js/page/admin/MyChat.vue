@@ -13,13 +13,14 @@
     <div class="chat-message">
         <section>
         <div class="chat-box" v-for="(data, index) in fromMessage" :key='index'>
-        <div class="chat-text-from">
+        <div class="chat-text-from" v-if="receiverID == data.message_from_id">
             <div class="message">
               {{data.message_from_id}} {{data.messages}}
             </div>
         </div>
-        <div class="chat-receiver">
-            <div class="message">
+        <div class="chat-receiver" v-if="datas.id == data.message_from_id">
+            <div class="message" >
+            {{data.message_receiver_id}} {{data.messages}}
             </div>
         </div></div>
         <div class="input-message">
@@ -69,12 +70,14 @@ const getUserMessage = (id) => {
     }).then(response => {
         receiverID.value = id
         fromMessage.value = response.data
-        console.log(response.data);
+        console.log(datas.value.id);
         
     })
 }
 
-
+setTimeout(() => {
+   console.log("dsd");
+}, 2000);
 const messages = ref('')
 const submitMessage = () => {
     axios({
@@ -87,7 +90,6 @@ const submitMessage = () => {
         }
     }).then(response => {
         console.log(response);
-        
     })
 
 }
@@ -127,6 +129,8 @@ section {
   background: #cccccc;
   display: grid;
   gap:10px;
+  overflow: scroll;
+  height: 50rem;
     
 }
 .chat-message {
